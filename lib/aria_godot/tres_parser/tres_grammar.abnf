@@ -1,0 +1,43 @@
+; TRES (Text RESource) Format ABNF Grammar
+; Godot Engine resource file format
+; Text-based format with sections and properties
+; Similar to TSCN but for individual resources
+
+; Section header: [section_name key=value key="value"]
+section-header = "[" section-name [*WSP section-attributes] *WSP "]"
+
+section-name = "gd_resource" / "ext_resource" / "sub_resource" / "resource" / identifier
+
+identifier = 1*(ALPHA / DIGIT / "_" / "-")
+
+; Section attributes: key=value pairs
+section-attributes = attribute *(1*WSP attribute)
+
+attribute = attribute-key "=" attribute-value
+
+attribute-key = identifier
+
+attribute-value = quoted-string / unquoted-value
+
+quoted-string = DQUOTE *quoted-char DQUOTE / "'" *quoted-char "'"
+
+quoted-char = VCHAR / WSP / %x2E / %x2F  ; Allow . and / in quoted strings
+
+unquoted-value = 1*(VCHAR / WSP / %x2E / %x2F / %x3A)  ; Allow : for paths
+
+; Property line: key = value
+property-line = property-key [*WSP "=" *WSP property-value]
+
+property-key = identifier / quoted-string
+
+property-value = quoted-string / unquoted-property-value
+
+unquoted-property-value = *VCHAR
+
+; Character definitions
+WSP = %x20 / %x09      ; Space or tab
+VCHAR = %x21-7E        ; Visible characters (printable ASCII, excluding space)
+ALPHA = %x41-5A / %x61-7A  ; A-Z, a-z
+DIGIT = %x30-39        ; 0-9
+DQUOTE = %x22          ; Double quote "
+

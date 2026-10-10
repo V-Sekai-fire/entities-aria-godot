@@ -15,4 +15,4 @@ As a dependency: `{:aria_godot, git: "https://github.com/V-Sekai-fire/entities-a
 
 ## Licence
 
-MIT, per the SPDX headers in the sources. The repository carries no LICENSE file.
+MIT. See [LICENSE](LICENSE).
